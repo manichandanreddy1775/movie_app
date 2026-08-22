@@ -1,3 +1,4 @@
+import '../widgets/section_title.dart';
 import 'package:flutter/material.dart';
 import '../data/sample_movies.dart';
 import '../widgets/movie_card.dart';
@@ -29,12 +30,9 @@ class HomeScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const SizedBox(height: 24),
-                  Text(
-                    'Popular Movies',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
+                  const SectionTitle(
+                    title: 'Popular Movies',
+                   ),
                 ],
               ),
             ),
