@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../models/movie.dart';
-import '../screens/movie_details_screen.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
@@ -14,14 +13,11 @@ class MovieCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
   onTap: () {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => MovieDetailsScreen(
-          movie: movie,
-        ),
-      ),
-    );
+   Navigator.pushNamed(
+  context,
+  '/details',
+  arguments: movie,
+);
   },
   child: Card(
       elevation: 4,
