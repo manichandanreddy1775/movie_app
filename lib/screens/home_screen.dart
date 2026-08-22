@@ -1,13 +1,25 @@
-import '../widgets/section_title.dart';
 import 'package:flutter/material.dart';
 import '../data/sample_movies.dart';
 import '../widgets/movie_card.dart';
+import '../widgets/section_title.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    int crossAxisCount;
+
+    if (screenWidth < 600) {
+      crossAxisCount = 2;
+    } else if (screenWidth < 1000) {
+      crossAxisCount = 3;
+    } else {
+      crossAxisCount = 4;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Movie App'),
@@ -32,7 +44,7 @@ class HomeScreen extends StatelessWidget {
                   const SizedBox(height: 24),
                   const SectionTitle(
                     title: 'Popular Movies',
-                   ),
+                  ),
                 ],
               ),
             ),
@@ -48,8 +60,8 @@ class HomeScreen extends StatelessWidget {
                 },
                 childCount: sampleMovies.length,
               ),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: crossAxisCount,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
                 childAspectRatio: 0.65,
