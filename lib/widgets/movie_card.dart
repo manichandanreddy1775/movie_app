@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/movie.dart';
+import '../screens/movie_details_screen.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
@@ -11,7 +12,18 @@ class MovieCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return InkWell(
+  onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MovieDetailsScreen(
+          movie: movie,
+        ),
+      ),
+    );
+  },
+  child: Card(
       elevation: 4,
       margin: const EdgeInsets.all(8),
       clipBehavior: Clip.antiAlias,
@@ -110,6 +122,7 @@ class MovieCard extends StatelessWidget {
           ),
         ],
       ),
+  ),
     );
   }
 }
