@@ -11,22 +11,54 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Movie App'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(12),
-        child: GridView.builder(
-          itemCount: sampleMovies.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            childAspectRatio: 0.65,
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Welcome to Movie App',
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Discover movies you will love',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    'Popular Movies',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                ],
+              ),
+            ),
           ),
-          itemBuilder: (context, index) {
-            return MovieCard(
-              movie: sampleMovies[index],
-            );
-          },
-        ),
+          SliverPadding(
+            padding: const EdgeInsets.all(12),
+            sliver: SliverGrid(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  return MovieCard(
+                    movie: sampleMovies[index],
+                  );
+                },
+                childCount: sampleMovies.length,
+              ),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                childAspectRatio: 0.65,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
