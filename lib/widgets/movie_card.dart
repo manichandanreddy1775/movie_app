@@ -60,6 +60,19 @@ class MovieCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 4),
                 Text(movie.rating.toString()),
+                const Spacer(),
+                IconButton(
+                  icon: const Icon(Icons.favorite_border),
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          '${movie.title} added to favorites',
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ),
