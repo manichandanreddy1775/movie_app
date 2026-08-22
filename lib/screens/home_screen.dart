@@ -8,67 +8,69 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    int crossAxisCount;
-
-    if (screenWidth < 600) {
-      crossAxisCount = 2;
-    } else if (screenWidth < 1000) {
-      crossAxisCount = 3;
-    } else {
-      crossAxisCount = 4;
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Movie App'),
       ),
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Welcome to Movie App',
-                    style: Theme.of(context).textTheme.headlineSmall,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          int crossAxisCount;
+
+          if (constraints.maxWidth < 600) {
+            crossAxisCount = 2;
+          } else if (constraints.maxWidth < 1000) {
+            crossAxisCount = 3;
+          } else {
+            crossAxisCount = 4;
+          }
+
+          return CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Welcome to Movie App',
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Discover movies you will love',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      const SizedBox(height: 24),
+                      const SectionTitle(
+                        title: 'Popular Movies',
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Discover movies you will love',
-                    style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ),
+              SliverPadding(
+                padding: const EdgeInsets.all(12),
+                sliver: SliverGrid(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return MovieCard(
+                        movie: sampleMovies[index],
+                      );
+                    },
+                    childCount: sampleMovies.length,
                   ),
-                  const SizedBox(height: 24),
-                  const SectionTitle(
-                    title: 'Popular Movies',
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: crossAxisCount,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 0.65,
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.all(12),
-            sliver: SliverGrid(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  return MovieCard(
-                    movie: sampleMovies[index],
-                  );
-                },
-                childCount: sampleMovies.length,
-              ),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: crossAxisCount,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                childAspectRatio: 0.65,
-              ),
-            ),
-          ),
-        ],
+            ],
+          );
+        },
       ),
     );
   }
