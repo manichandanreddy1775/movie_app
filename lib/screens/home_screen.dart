@@ -1,3 +1,5 @@
+import 'package:provider/provider.dart';
+import '../providers/favorite_provider.dart';
 import 'favorites_screen.dart';
 import 'package:flutter/material.dart';
 import '../data/sample_movies.dart';
@@ -13,17 +15,47 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
   title: const Text('Movie App'),
   actions: [
-    IconButton(
-      icon: const Icon(Icons.favorite),
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const FavoritesScreen(),
+    Consumer<FavoriteProvider>(
+  builder: (context, favoriteProvider, child) {
+    final count = favoriteProvider.favorites.length;
+
+    return Stack(
+      children: [
+        IconButton(
+          icon: const Icon(Icons.favorite),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const FavoritesScreen(),
+              ),
+            );
+          },
+        ),
+        if (count > 0)
+          Positioned(
+            right: 5,
+            top: 5,
+            child: Container(
+              padding: const EdgeInsets.all(4),
+              decoration: const BoxDecoration(
+                color: Colors.red,
+                shape: BoxShape.circle,
+              ),
+              child: Text(
+                '$count',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           ),
-        );
-      },
-    ),
+      ],
+    );
+  },
+),
   ],
 ),
       body: LayoutBuilder(
