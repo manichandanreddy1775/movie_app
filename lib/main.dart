@@ -1,9 +1,11 @@
-import 'package:provider/provider.dart';
-import 'providers/favorite_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'providers/favorite_provider.dart';
 import 'screens/home_screen.dart';
 import 'screens/movie_details_screen.dart';
 import 'models/movie.dart';
+import 'theme/app_theme.dart';
 
 void main() {
   runApp(
@@ -22,16 +24,21 @@ class MovieApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Movie App',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-      ),
+
+      theme: AppTheme.lightTheme,
+
       home: const HomeScreen(),
+
       routes: {
         '/home': (context) => const HomeScreen(),
-        '/details': (context) {
-          final movie = ModalRoute.of(context)!.settings.arguments as Movie;
 
-          return MovieDetailsScreen(movie: movie);
+        '/details': (context) {
+          final movie =
+              ModalRoute.of(context)!.settings.arguments as Movie;
+
+          return MovieDetailsScreen(
+            movie: movie,
+          );
         },
       },
     );
