@@ -1,3 +1,4 @@
+import 'favorites_screen.dart';
 import 'package:flutter/material.dart';
 import '../data/sample_movies.dart';
 import '../widgets/movie_card.dart';
@@ -10,8 +11,21 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Movie App'),
-      ),
+  title: const Text('Movie App'),
+  actions: [
+    IconButton(
+      icon: const Icon(Icons.favorite),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const FavoritesScreen(),
+          ),
+        );
+      },
+    ),
+  ],
+),
       body: LayoutBuilder(
         builder: (context, constraints) {
           int crossAxisCount;
