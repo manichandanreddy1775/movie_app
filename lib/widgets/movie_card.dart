@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import '../models/movie.dart';
+import 'package:provider/provider.dart';
 
-class MovieCard extends StatefulWidget {
+import '../models/movie.dart';
+import '../providers/favorite_provider.dart';
+import '../screens/movie_details_screen.dart';
+
+class MovieCard extends StatelessWidget {
   final Movie movie;
 
   const MovieCard({
@@ -10,59 +14,49 @@ class MovieCard extends StatefulWidget {
   });
 
   @override
-  State<MovieCard> createState() => _MovieCardState();
-}
-
-class _MovieCardState extends State<MovieCard> {
-  bool isFavorite = false;
-
-  @override
   Widget build(BuildContext context) {
-    final movie = widget.movie;
-
-    return InkWell(
+    return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(
+        Navigator.push(
           context,
-          '/details',
-          arguments: movie,
+          MaterialPageRoute(
+            builder: (context) => MovieDetailsScreen(movie: movie),
+          ),
         );
       },
       child: Card(
         elevation: 4,
-        margin: const EdgeInsets.all(8),
-        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               child: Stack(
                 children: [
-                  Positioned.fill(
+                  ClipRRect(
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(12),
+                    ),
                     child: Image.network(
                       movie.posterUrl,
+                      width: double.infinity,
                       fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return const Center(
-                          child: Icon(
-                            Icons.movie,
-                            size: 50,
-                          ),
-                        );
-                      },
                     ),
                   ),
+
                   Positioned(
                     top: 8,
                     right: 8,
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 8,
-                        vertical: 4,
+                        vertical: 5,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.black54,
-                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.black87,
+                        borderRadius: BorderRadius.circular(20),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -70,11 +64,11 @@ class _MovieCardState extends State<MovieCard> {
                           const Icon(
                             Icons.star,
                             color: Colors.amber,
-                            size: 16,
+                            size: 18,
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            movie.rating.toString(),
+                            '${movie.rating}',
                             style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -87,39 +81,47 @@ class _MovieCardState extends State<MovieCard> {
                 ],
               ),
             ),
+
             Padding(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              padding: const EdgeInsets.all(10),
+              child: Text(
+                movie.title,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 0, 6, 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    movie.title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                    movie.genre,
+                    style: TextStyle(
+                      color: Colors.grey[700],
                     ),
                   ),
-                  const SizedBox(height: 4),
-                  Row(
-                    children: [
-                      Text(movie.genre),
-                      const Spacer(),
-                      IconButton(
+
+                  Consumer<FavoriteProvider>(
+                    builder: (context, favoriteProvider, child) {
+                      final isFavorite =
+                          favoriteProvider.isFavorite(movie);
+
+                      return IconButton(
+                        onPressed: () {
+                          favoriteProvider.toggleFavorite(movie);
+                        },
                         icon: Icon(
                           isFavorite
                               ? Icons.favorite
                               : Icons.favorite_border,
                           color: isFavorite ? Colors.red : null,
                         ),
-                        onPressed: () {
-                          setState(() {
-                            isFavorite = !isFavorite;
-                          });
-                        },
-                      ),
-                    ],
+                      );
+                    },
                   ),
                 ],
               ),
