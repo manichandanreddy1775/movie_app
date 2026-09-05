@@ -1,10 +1,17 @@
+import 'package:provider/provider.dart';
+import 'providers/favorite_provider.dart';
 import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
 import 'screens/movie_details_screen.dart';
 import 'models/movie.dart';
 
 void main() {
-  runApp(const MovieApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => FavoriteProvider(),
+      child: const MovieApp(),
+    ),
+  );
 }
 
 class MovieApp extends StatelessWidget {
