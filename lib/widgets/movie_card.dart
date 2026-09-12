@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../models/movie.dart';
 import '../providers/favorite_provider.dart';
 import '../screens/movie_details_screen.dart';
+import 'rating_badge.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
@@ -20,7 +21,9 @@ class MovieCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => MovieDetailsScreen(movie: movie),
+            builder: (context) => MovieDetailsScreen(
+              movie: movie,
+            ),
           ),
         );
       },
@@ -32,6 +35,7 @@ class MovieCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Movie Poster and Rating
             Expanded(
               child: Stack(
                 children: [
@@ -46,42 +50,19 @@ class MovieCard extends StatelessWidget {
                     ),
                   ),
 
+                  // Reusable Rating Badge
                   Positioned(
                     top: 8,
                     right: 8,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 5,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.black87,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(
-                            Icons.star,
-                            color: Colors.amber,
-                            size: 18,
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            '${movie.rating}',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
+                    child: RatingBadge(
+                      rating: movie.rating,
                     ),
                   ),
                 ],
               ),
             ),
 
+            // Movie Title
             Padding(
               padding: const EdgeInsets.all(10),
               child: Text(
@@ -93,8 +74,14 @@ class MovieCard extends StatelessWidget {
               ),
             ),
 
+            // Genre and Favorite Button
             Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 6, 10),
+              padding: const EdgeInsets.fromLTRB(
+                10,
+                0,
+                6,
+                10,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -106,7 +93,11 @@ class MovieCard extends StatelessWidget {
                   ),
 
                   Consumer<FavoriteProvider>(
-                    builder: (context, favoriteProvider, child) {
+                    builder: (
+                      context,
+                      favoriteProvider,
+                      child,
+                    ) {
                       final isFavorite =
                           favoriteProvider.isFavorite(movie);
 
@@ -118,7 +109,9 @@ class MovieCard extends StatelessWidget {
                           isFavorite
                               ? Icons.favorite
                               : Icons.favorite_border,
-                          color: isFavorite ? Colors.red : null,
+                          color: isFavorite
+                              ? Colors.red
+                              : null,
                         ),
                       );
                     },
