@@ -1,10 +1,12 @@
-import 'package:provider/provider.dart';
-import '../providers/favorite_provider.dart';
-import 'favorites_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import '../data/sample_movies.dart';
+import '../providers/favorite_provider.dart';
 import '../widgets/movie_card.dart';
 import '../widgets/section_title.dart';
+import '../widgets/movie_search_form.dart';
+import 'favorites_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -13,108 +15,123 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-  title: const Text('Movie App'),
-  actions: [
-    Consumer<FavoriteProvider>(
-  builder: (context, favoriteProvider, child) {
-    final count = favoriteProvider.favorites.length;
+        title: const Text('Movie App'),
+        actions: [
+          Consumer<FavoriteProvider>(
+            builder: (context, favoriteProvider, child) {
+              final count = favoriteProvider.favorites.length;
 
-    return Stack(
-      children: [
-        IconButton(
-          icon: const Icon(Icons.favorite),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const FavoritesScreen(),
-              ),
-            );
-          },
-        ),
-        if (count > 0)
-          Positioned(
-            right: 5,
-            top: 5,
-            child: Container(
-              padding: const EdgeInsets.all(4),
-              decoration: const BoxDecoration(
-                color: Colors.red,
-                shape: BoxShape.circle,
-              ),
-              child: Text(
-                '$count',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+              return Stack(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.favorite),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              const FavoritesScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                  if (count > 0)
+                    Positioned(
+                      right: 5,
+                      top: 5,
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: const BoxDecoration(
+                          color: Colors.red,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Text(
+                          '$count',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              );
+            },
           ),
-      ],
-    );
-  },
-),
-  ],
-),
+        ],
+      ),
+
       body: LayoutBuilder(
         builder: (context, constraints) {
           int crossAxisCount;
 
           if (constraints.maxWidth < 600) {
             crossAxisCount = 2;
-          } else if (constraints.maxWidth < 1000) {
+          } else if (constraints.maxWidth < 900) {
             crossAxisCount = 3;
           } else {
             crossAxisCount = 4;
           }
 
-          return CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Welcome to Movie App',
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Discover movies you will love',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      const SizedBox(height: 24),
-                      const SectionTitle(
-                        title: 'Popular Movies',
-                      ),
-                    ],
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Welcome to Movie App',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              ),
-              SliverPadding(
-                padding: const EdgeInsets.all(12),
-                sliver: SliverGrid(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      return MovieCard(
-                        movie: sampleMovies[index],
-                      );
-                    },
-                    childCount: sampleMovies.length,
+
+                const SizedBox(height: 8),
+
+                const Text(
+                  'Discover movies you will love',
+                  style: TextStyle(
+                    fontSize: 16,
                   ),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                ),
+
+                const SizedBox(height: 20),
+
+                MovieSearchForm(
+                  onSearch: (query) {
+                    debugPrint('Searching for: $query');
+                  },
+                ),
+
+                const SizedBox(height: 24),
+
+                const SectionTitle(
+                  title: 'Popular Movies',
+                ),
+
+                const SizedBox(height: 12),
+
+                GridView.builder(
+                  shrinkWrap: true,
+                  physics:
+                      const NeverScrollableScrollPhysics(),
+                  itemCount: sampleMovies.length,
+                  gridDelegate:
+                      SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: crossAxisCount,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 12,
+                    mainAxisSpacing: 12,
                     childAspectRatio: 0.65,
                   ),
+                  itemBuilder: (context, index) {
+                    return MovieCard(
+                      movie: sampleMovies[index],
+                    );
+                  },
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         },
       ),
