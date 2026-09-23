@@ -1,3 +1,4 @@
+import '../widgets/fade_in_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -125,9 +126,11 @@ class HomeScreen extends StatelessWidget {
                     childAspectRatio: 0.65,
                   ),
                   itemBuilder: (context, index) {
-                    return MovieCard(
-                      movie: sampleMovies[index],
-                    );
+                    return FadeInAnimation(
+  child: MovieCard(
+    movie: sampleMovies[index],
+  ),
+);
                   },
                 ),
               ],
