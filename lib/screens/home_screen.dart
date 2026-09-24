@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../data/sample_movies.dart';
 import '../providers/favorite_provider.dart';
+import '../services/movie_api_service.dart';
+import '../models/movie.dart';
 import '../widgets/movie_card.dart';
 import '../widgets/section_title.dart';
 import '../widgets/movie_search_form.dart';
@@ -10,8 +11,23 @@ import '../widgets/fade_in_animation.dart';
 import '../widgets/slide_in_animation.dart';
 import 'favorites_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final MovieApiService _apiService = MovieApiService();
+
+  late Future<List<Movie>> _moviesFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _moviesFuture = _apiService.fetchMovies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +47,7 @@ class HomeScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              const FavoritesScreen(),
+                          builder: (context) => const FavoritesScreen(),
                         ),
                       );
                     },
@@ -63,7 +78,6 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-
       body: LayoutBuilder(
         builder: (context, constraints) {
           int crossAxisCount;
@@ -93,9 +107,7 @@ class HomeScreen extends StatelessWidget {
 
                 const Text(
                   'Discover movies you will love',
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
+                  style: TextStyle(fontSize: 16),
                 ),
 
                 const SizedBox(height: 20),
@@ -109,30 +121,72 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(height: 24),
 
                 const SectionTitle(
-                  title: 'Popular Movies',
+                  title: 'Movies from REST API',
                 ),
 
                 const SizedBox(height: 12),
 
-                GridView.builder(
-                  shrinkWrap: true,
-                  physics:
-                      const NeverScrollableScrollPhysics(),
-                  itemCount: sampleMovies.length,
-                  gridDelegate:
-                      SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: crossAxisCount,
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 12,
-                    childAspectRatio: 0.65,
-                  ),
-                  itemBuilder: (context, index) {
-                    return FadeInAnimation(
-                      child: SlideInAnimation(
-                        child: MovieCard(
-                          movie: sampleMovies[index],
+                FutureBuilder<List<Movie>>(
+                  future: _moviesFuture,
+                  builder: (context, snapshot) {
+                    // Loading state
+                    if (snapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(30),
+                          child: CircularProgressIndicator(),
                         ),
+                      );
+                    }
+
+                    // Error state
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Text(
+                            'Failed to load movies:\n${snapshot.error}',
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      );
+                    }
+
+                    // Empty state
+                    if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(20),
+                          child: Text('No movies found'),
+                        ),
+                      );
+                    }
+
+                    // API data
+                    final movies = snapshot.data!;
+
+                    return GridView.builder(
+                      shrinkWrap: true,
+                      physics:
+                          const NeverScrollableScrollPhysics(),
+                      itemCount: movies.length,
+                      gridDelegate:
+                          SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: crossAxisCount,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 12,
+                        childAspectRatio: 0.65,
                       ),
+                      itemBuilder: (context, index) {
+                        return FadeInAnimation(
+                          child: SlideInAnimation(
+                            child: MovieCard(
+                              movie: movies[index],
+                            ),
+                          ),
+                        );
+                      },
                     );
                   },
                 ),
