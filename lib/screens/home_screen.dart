@@ -6,6 +6,7 @@ import '../providers/favorite_provider.dart';
 import '../widgets/movie_card.dart';
 import '../widgets/section_title.dart';
 import '../widgets/movie_search_form.dart';
+import '../widgets/fade_in_animation.dart';
 import '../widgets/slide_in_animation.dart';
 import 'favorites_screen.dart';
 
@@ -62,6 +63,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
+
       body: LayoutBuilder(
         builder: (context, constraints) {
           int crossAxisCount;
@@ -125,9 +127,11 @@ class HomeScreen extends StatelessWidget {
                     childAspectRatio: 0.65,
                   ),
                   itemBuilder: (context, index) {
-                    return SlideInAnimation(
-                      child: MovieCard(
-                        movie: sampleMovies[index],
+                    return FadeInAnimation(
+                      child: SlideInAnimation(
+                        child: MovieCard(
+                          movie: sampleMovies[index],
+                        ),
                       ),
                     );
                   },
