@@ -23,6 +23,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   late Future<List<Movie>> _moviesFuture;
 
+  String _searchQuery = '';
+
   @override
   void initState() {
     super.initState();
@@ -124,16 +126,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 20),
+
                   MovieSearchForm(
                     onSearch: (query) {
-                      debugPrint('Searching for: $query');
+                      setState(() {
+                        _searchQuery = query.toLowerCase();
+                      });
                     },
                   ),
+
                   const SizedBox(height: 24),
+
                   const SectionTitle(
                     title: 'Movies from REST API',
                   ),
+
                   const SizedBox(height: 12),
+
                   FutureBuilder<List<Movie>>(
                     future: _moviesFuture,
                     builder: (context, snapshot) {
@@ -170,10 +179,28 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       final movies = snapshot.data!;
 
+                      final filteredMovies = movies.where((movie) {
+                        return movie.title
+                            .toLowerCase()
+                            .contains(_searchQuery);
+                      }).toList();
+
+                      if (filteredMovies.isEmpty) {
+                        return const Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(20),
+                            child: Text(
+                              'No movies match your search',
+                            ),
+                          ),
+                        );
+                      }
+
                       return GridView.builder(
                         shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: movies.length,
+                        physics:
+                            const NeverScrollableScrollPhysics(),
+                        itemCount: filteredMovies.length,
                         gridDelegate:
                             SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: crossAxisCount,
@@ -185,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           return FadeInAnimation(
                             child: SlideInAnimation(
                               child: MovieCard(
-                                movie: movies[index],
+                                movie: filteredMovies[index],
                               ),
                             ),
                           );
