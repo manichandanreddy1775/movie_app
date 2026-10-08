@@ -7,6 +7,7 @@ import '../services/movie_api_service.dart';
 import '../widgets/fade_in_animation.dart';
 import '../widgets/movie_card.dart';
 import '../widgets/movie_search_form.dart';
+import '../widgets/movie_state_message.dart';
 import '../widgets/section_title.dart';
 import '../widgets/slide_in_animation.dart';
 import 'favorites_screen.dart';
@@ -152,23 +153,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       }
 
                       if (snapshot.hasError) {
-                        return Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Text(
-                              'Failed to load movies:\n${snapshot.error}',
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
+                        return const MovieStateMessage(
+                          icon: Icons.error_outline,
+                          message:
+                              'Failed to load movies. Please try again.',
                         );
                       }
 
                       if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return const Center(
-                          child: Padding(
-                            padding: EdgeInsets.all(20),
-                            child: Text('No movies found'),
-                          ),
+                        return const MovieStateMessage(
+                          icon: Icons.movie_outlined,
+                          message: 'No movies found.',
                         );
                       }
 
@@ -193,13 +188,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           const SizedBox(height: 12),
                           if (filteredMovies.isEmpty)
-                            const Center(
-                              child: Padding(
-                                padding: EdgeInsets.all(20),
-                                child: Text(
-                                  'No movies match your search',
-                                ),
-                              ),
+                            const MovieStateMessage(
+                              icon: Icons.search_off,
+                              message:
+                                  'No movies match your search.',
                             )
                           else
                             GridView.builder(
