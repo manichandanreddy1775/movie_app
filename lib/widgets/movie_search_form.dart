@@ -28,19 +28,42 @@ class _MovieSearchFormState extends State<MovieSearchForm> {
     }
   }
 
+  void _clearSearch() {
+    _searchController.clear();
+    widget.onSearch('');
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
+    final hasText = _searchController.text.isNotEmpty;
+
     return Form(
       key: _formKey,
       child: TextFormField(
         controller: _searchController,
         textInputAction: TextInputAction.search,
+        onChanged: (_) {
+          setState(() {});
+        },
         decoration: InputDecoration(
           hintText: 'Search movies...',
           prefixIcon: const Icon(Icons.search),
-          suffixIcon: IconButton(
-            icon: const Icon(Icons.arrow_forward),
-            onPressed: _submitSearch,
+          suffixIcon: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (hasText)
+                IconButton(
+                  icon: const Icon(Icons.clear),
+                  tooltip: 'Clear search',
+                  onPressed: _clearSearch,
+                ),
+              IconButton(
+                icon: const Icon(Icons.arrow_forward),
+                tooltip: 'Search',
+                onPressed: _submitSearch,
+              ),
+            ],
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
@@ -48,7 +71,7 @@ class _MovieSearchFormState extends State<MovieSearchForm> {
         ),
         validator: (value) {
           if (value == null || value.trim().isEmpty) {
-            return 'Please enter a movie name';
+            return null;
           }
 
           if (value.trim().length < 2) {
