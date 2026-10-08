@@ -126,7 +126,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 20),
-
                   MovieSearchForm(
                     onSearch: (query) {
                       setState(() {
@@ -134,15 +133,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       });
                     },
                   ),
-
                   const SizedBox(height: 24),
-
                   const SectionTitle(
                     title: 'Movies from REST API',
                   ),
-
                   const SizedBox(height: 12),
-
                   FutureBuilder<List<Movie>>(
                     future: _moviesFuture,
                     builder: (context, snapshot) {
@@ -185,38 +180,51 @@ class _HomeScreenState extends State<HomeScreen> {
                             .contains(_searchQuery);
                       }).toList();
 
-                      if (filteredMovies.isEmpty) {
-                        return const Center(
-                          child: Padding(
-                            padding: EdgeInsets.all(20),
-                            child: Text(
-                              'No movies match your search',
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${filteredMovies.length} movies found',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.grey[700],
                             ),
                           ),
-                        );
-                      }
-
-                      return GridView.builder(
-                        shrinkWrap: true,
-                        physics:
-                            const NeverScrollableScrollPhysics(),
-                        itemCount: filteredMovies.length,
-                        gridDelegate:
-                            SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: crossAxisCount,
-                          crossAxisSpacing: 12,
-                          mainAxisSpacing: 12,
-                          childAspectRatio: 0.65,
-                        ),
-                        itemBuilder: (context, index) {
-                          return FadeInAnimation(
-                            child: SlideInAnimation(
-                              child: MovieCard(
-                                movie: filteredMovies[index],
+                          const SizedBox(height: 12),
+                          if (filteredMovies.isEmpty)
+                            const Center(
+                              child: Padding(
+                                padding: EdgeInsets.all(20),
+                                child: Text(
+                                  'No movies match your search',
+                                ),
                               ),
+                            )
+                          else
+                            GridView.builder(
+                              shrinkWrap: true,
+                              physics:
+                                  const NeverScrollableScrollPhysics(),
+                              itemCount: filteredMovies.length,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: crossAxisCount,
+                                crossAxisSpacing: 12,
+                                mainAxisSpacing: 12,
+                                childAspectRatio: 0.65,
+                              ),
+                              itemBuilder: (context, index) {
+                                return FadeInAnimation(
+                                  child: SlideInAnimation(
+                                    child: MovieCard(
+                                      movie: filteredMovies[index],
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
-                          );
-                        },
+                        ],
                       );
                     },
                   ),
