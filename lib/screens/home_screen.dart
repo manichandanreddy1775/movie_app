@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/movie.dart';
 import '../providers/favorite_provider.dart';
 import '../services/movie_api_service.dart';
-import '../models/movie.dart';
-import '../widgets/movie_card.dart';
-import '../widgets/section_title.dart';
-import '../widgets/movie_search_form.dart';
 import '../widgets/fade_in_animation.dart';
+import '../widgets/movie_card.dart';
+import '../widgets/movie_search_form.dart';
+import '../widgets/section_title.dart';
 import '../widgets/slide_in_animation.dart';
 import 'favorites_screen.dart';
 
@@ -29,12 +29,25 @@ class _HomeScreenState extends State<HomeScreen> {
     _moviesFuture = _apiService.fetchMovies();
   }
 
+  Future<void> _refreshMovies() async {
+    setState(() {
+      _moviesFuture = _apiService.fetchMovies();
+    });
+
+    await _moviesFuture;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Movie App'),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: 'Refresh movies',
+            onPressed: _refreshMovies,
+          ),
           Consumer<FavoriteProvider>(
             builder: (context, favoriteProvider, child) {
               final count = favoriteProvider.favorites.length;
@@ -90,107 +103,98 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisCount = 4;
           }
 
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Welcome to Movie App',
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
+          return RefreshIndicator(
+            onRefresh: _refreshMovies,
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Welcome to Movie App',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-
-                const SizedBox(height: 8),
-
-                const Text(
-                  'Discover movies you will love',
-                  style: TextStyle(fontSize: 16),
-                ),
-
-                const SizedBox(height: 20),
-
-                MovieSearchForm(
-                  onSearch: (query) {
-                    debugPrint('Searching for: $query');
-                  },
-                ),
-
-                const SizedBox(height: 24),
-
-                const SectionTitle(
-                  title: 'Movies from REST API',
-                ),
-
-                const SizedBox(height: 12),
-
-                FutureBuilder<List<Movie>>(
-                  future: _moviesFuture,
-                  builder: (context, snapshot) {
-                    // Loading state
-                    if (snapshot.connectionState ==
-                        ConnectionState.waiting) {
-                      return const Center(
-                        child: Padding(
-                          padding: EdgeInsets.all(30),
-                          child: CircularProgressIndicator(),
-                        ),
-                      );
-                    }
-
-                    // Error state
-                    if (snapshot.hasError) {
-                      return Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Text(
-                            'Failed to load movies:\n${snapshot.error}',
-                            textAlign: TextAlign.center,
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Discover movies you will love',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  const SizedBox(height: 20),
+                  MovieSearchForm(
+                    onSearch: (query) {
+                      debugPrint('Searching for: $query');
+                    },
+                  ),
+                  const SizedBox(height: 24),
+                  const SectionTitle(
+                    title: 'Movies from REST API',
+                  ),
+                  const SizedBox(height: 12),
+                  FutureBuilder<List<Movie>>(
+                    future: _moviesFuture,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return const Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(30),
+                            child: CircularProgressIndicator(),
                           ),
-                        ),
-                      );
-                    }
+                        );
+                      }
 
-                    // Empty state
-                    if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                      return const Center(
-                        child: Padding(
-                          padding: EdgeInsets.all(20),
-                          child: Text('No movies found'),
-                        ),
-                      );
-                    }
-
-                    // API data
-                    final movies = snapshot.data!;
-
-                    return GridView.builder(
-                      shrinkWrap: true,
-                      physics:
-                          const NeverScrollableScrollPhysics(),
-                      itemCount: movies.length,
-                      gridDelegate:
-                          SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: crossAxisCount,
-                        crossAxisSpacing: 12,
-                        mainAxisSpacing: 12,
-                        childAspectRatio: 0.65,
-                      ),
-                      itemBuilder: (context, index) {
-                        return FadeInAnimation(
-                          child: SlideInAnimation(
-                            child: MovieCard(
-                              movie: movies[index],
+                      if (snapshot.hasError) {
+                        return Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Text(
+                              'Failed to load movies:\n${snapshot.error}',
+                              textAlign: TextAlign.center,
                             ),
                           ),
                         );
-                      },
-                    );
-                  },
-                ),
-              ],
+                      }
+
+                      if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return const Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(20),
+                            child: Text('No movies found'),
+                          ),
+                        );
+                      }
+
+                      final movies = snapshot.data!;
+
+                      return GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: movies.length,
+                        gridDelegate:
+                            SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: crossAxisCount,
+                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 12,
+                          childAspectRatio: 0.65,
+                        ),
+                        itemBuilder: (context, index) {
+                          return FadeInAnimation(
+                            child: SlideInAnimation(
+                              child: MovieCard(
+                                movie: movies[index],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           );
         },
