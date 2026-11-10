@@ -8,6 +8,7 @@ on:
       - 'test/**'
       - 'pubspec.yaml'
       - '.github/workflows/capture-screenshots.yml'
+      - '.github/scripts/capture-screenshots.cjs'
       - 'README.md'
   workflow_dispatch:
 
@@ -67,3 +68,12 @@ jobs:
           else
             echo "Screenshots are already up to date."
           fi
+
+      - name: Upload all experiment screenshots to Actions artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: movie-app-experiment-screenshots
+          path: screenshots/*.png
+          if-no-files-found: warn
+          retention-days: 30
