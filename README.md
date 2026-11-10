@@ -52,39 +52,17 @@ HTTP requests, JSON parsing, and mapping API data to model objects.
 ### Experiment 10 – Testing and Debugging
 Unit and widget test coverage.
 
-## 4. Experiment Visual Previews
+## 4. Screenshots
 
-The following images are visual documentation previews based on the project concepts. They are not screenshots captured from a running emulator or browser.
+The supplied source ZIP does not include captured screenshots of the running Movie App. This section will contain genuine screenshots of the app screens once they are captured from a running Flutter build. The launcher icons and splash assets in the ZIP are not substitutes for app-screen screenshots.
 
-### Experiment 1 – Flutter and Dart Basics
-![Experiment 1 – Flutter and Dart Basics](screenshots/experiment_01.svg)
-
-### Experiment 2 – Flutter Widgets and Layouts
-![Experiment 2 – Flutter Widgets and Layouts](screenshots/experiment_02.svg)
-
-### Experiment 3 – Responsive UI Design
-![Experiment 3 – Responsive UI Design](screenshots/experiment_03.svg)
-
-### Experiment 4 – Navigation
-![Experiment 4 – Navigation](screenshots/experiment_04.svg)
-
-### Experiment 5 – State Management
-![Experiment 5 – State Management](screenshots/experiment_05.svg)
-
-### Experiment 6 – Custom Widgets and Themes
-![Experiment 6 – Custom Widgets and Themes](screenshots/experiment_06.svg)
-
-### Experiment 7 – Forms and Validation
-![Experiment 7 – Forms and Validation](screenshots/experiment_07.svg)
-
-### Experiment 8 – Animations
-![Experiment 8 – Animations](screenshots/experiment_08.svg)
-
-### Experiment 9 – REST API and JSON
-![Experiment 9 – REST API and JSON](screenshots/experiment_09.svg)
-
-### Experiment 10 – Testing and Debugging
-![Experiment 10 – Testing and Debugging](screenshots/experiment_10.svg)
+Suggested screenshots:
+- Home screen and movie listing
+- Movie details screen
+- Search results
+- Favorites screen
+- Responsive layout
+- Loading, error, and empty states
 
 ## 5. How to Run the Project
 
