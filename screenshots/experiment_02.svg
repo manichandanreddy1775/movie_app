@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-label="Experiment 2: Widgets &amp; Layouts visual preview">
+ <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#101827"/><stop offset="1" stop-color="#202b43"/></linearGradient><linearGradient id="accent" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7564e8"/><stop offset="1" stop-color="#35b8c8"/></linearGradient></defs>
+ <rect width="1440" height="900" fill="#eef1f7"/><rect x="0" y="0" width="1440" height="92" fill="url(#bg)"/>
+ <circle cx="54" cy="46" r="19" fill="url(#accent)"/><path d="M47 57V35h5l9 12V35h5v22h-5l-9-12v12z" fill="#fff"/>
+ <text x="94" y="42" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#fff">MOVIE APP</text><text x="94" y="66" font-family="Arial,sans-serif" font-size="12" fill="#aeb9ce">FLUTTER LAB PROJECT  •  CS506PC</text>
+ <text x="1375" y="52" text-anchor="end" font-family="Arial,sans-serif" font-size="15" fill="#dce4f2">EXPERIMENT 02</text>
+ <text x="72" y="164" font-family="Arial,sans-serif" font-size="16" font-weight="700" letter-spacing="2" fill="#7668dc">MOVIE CARD</text>
+ <text x="72" y="222" font-family="Arial,sans-serif" font-size="42" font-weight="700" fill="#172238">Widgets &amp; Layouts</text>
+ <rect x="72" y="260" width="1296" height="555" rx="26" fill="#fff" stroke="#dce2ed" stroke-width="2"/>
+ <rect x="72" y="260" width="1296" height="66" rx="26" fill="#f7f8fc"/><path d="M72 300v-14q0-26 26-26h1244q26 0 26 26v14" fill="#f7f8fc"/>
+ <circle cx="112" cy="293" r="7" fill="#f47c86"/><circle cx="138" cy="293" r="7" fill="#f2c15b"/><circle cx="164" cy="293" r="7" fill="#60c69a"/>
+ <text x="205" y="299" font-family="Arial,sans-serif" font-size="15" fill="#65718a">lib/  •  Flutter implementation preview</text>
+ <rect x="112" y="362" width="360" height="390" rx="18" fill="#f3f1ff"/><rect x="112" y="362" width="360" height="10" rx="5" fill="url(#accent)"/>
+ <text x="148" y="420" font-family="Arial,sans-serif" font-size="14" font-weight="700" fill="#7564e8">IMPLEMENTATION</text>
+ <text x="148" y="474" font-family="Arial,sans-serif" font-size="25" font-weight="700" fill="#1b2940">Card</text>
+ <text x="148" y="526" font-family="Arial,sans-serif" font-size="20" fill="#3f4b62">InkWell  •  Column</text>
+ <text x="148" y="568" font-family="Arial,sans-serif" font-size="20" fill="#3f4b62">Expanded  •  Stack</text>
+ <text x="148" y="610" font-family="Arial,sans-serif" font-size="20" fill="#3f4b62">Hero  •  Image.network</text>
+ <text x="148" y="652" font-family="Arial,sans-serif" font-size="20" fill="#3f4b62">RatingBadge</text>
+ <rect x="520" y="362" width="800" height="390" rx="18" fill="#fbfcff" stroke="#e2e7f0"/>
+ <text x="560" y="415" font-family="Arial,sans-serif" font-size="14" font-weight="700" letter-spacing="1.5" fill="#8a94a8">HOW IT WORKS</text>
+ <rect x="560" y="450" width="720" height="76" rx="13" fill="#f0efff"/><circle cx="600" cy="488" r="18" fill="#7564e8"/><text x="600" y="495" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="700" fill="#fff">2</text>
+ <text x="638" y="496" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#26334a">Tap a card to open details</text>
+ <rect x="560" y="548" width="720" height="76" rx="13" fill="#eaf7f8"/><circle cx="600" cy="586" r="18" fill="#2ca9b8"/><path d="M592 586l6 6 11-13" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+ <text x="638" y="594" font-family="Arial,sans-serif" font-size="21" fill="#26334a">undefined</text>
+ <rect x="560" y="650" width="720" height="54" rx="10" fill="#172238"/><text x="590" y="684" font-family="Arial,sans-serif" font-size="16" fill="#dbe3f0">CODE-BASED PREVIEW  •  NOT A LIVE DEVICE CAPTURE</text>
+ <text x="72" y="862" font-family="Arial,sans-serif" font-size="14" fill="#788398">Source-derived visual documentation for the Movie App Flutter lab project</text>
+ <text x="1368" y="862" text-anchor="end" font-family="Arial,sans-serif" font-size="14" fill="#788398">EXPERIMENT 02 / 10</text>
+ </svg>
