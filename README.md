@@ -94,7 +94,7 @@ GitHub Actions workflow: `.github/workflows/capture-screenshots.yml`
 - Uploads the screenshots as a downloadable Actions artifact.
 - Can also be started manually from **Actions → Capture Movie App Screenshots → Run workflow**.
 
-## 6. How to Run the Project
+## 5. How to Run the Project
 
 Install Flutter, then run:
 
@@ -112,7 +112,7 @@ flutter analyze
 flutter test
 ```
 
-## 7. Project Structure
+## 6. Project Structure
 
 ```text
 lib/
@@ -130,10 +130,10 @@ screenshots/
   workflows/
 ```
 
-## 8. GitHub Repository
+## 7. GitHub Repository
 
 [Movie App Repository](https://github.com/manichandanreddy1775/movie_app)
 
-## 9. Conclusion
+## 8. Conclusion
 
 This project applies Flutter UI design concepts in a movie browsing application. The source files, tests, and screenshots provide evidence of the implemented lab experiments.
