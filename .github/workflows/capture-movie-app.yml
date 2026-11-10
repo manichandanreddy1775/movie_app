@@ -1,0 +1,102 @@
+name: Capture Movie App Screenshots
+
+on:
+  push:
+    paths:
+      - ".github/workflows/capture-movie-app.yml"
+      - "lib/**"
+      - "pubspec.yaml"
+      - "pubspec.lock"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out project
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install dependencies and build the real app
+        run: |
+          flutter --version
+          flutter pub get
+          flutter build web --release
+
+      - name: Set up browser automation
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+
+      - name: Serve the Flutter web build
+        run: |
+          python3 -m http.server 8080 --directory build/web > /tmp/movie-app-server.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl --silent --fail http://127.0.0.1:8080/ > /dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+          cat /tmp/movie-app-server.log
+          exit 1
+
+      - name: Capture screenshots from the running app
+        run: |
+          mkdir -p screenshots
+          node <<'NODE'
+          const { chromium } = require('playwright');
+          (async () => {
+            const browser = await chromium.launch({ headless: true });
+            const page = await browser.newPage({
+              viewport: { width: 1440, height: 1100 },
+              deviceScaleFactor: 1
+            });
+            page.setDefaultTimeout(30000);
+            await page.goto('http://127.0.0.1:8080', { waitUntil: 'networkidle' }).catch(() => {});
+            await page.waitForTimeout(10000);
+            await page.screenshot({ path: 'screenshots/01-home-screen.png', fullPage: true });
+
+            // Open the first movie card in the rendered Flutter UI.
+            await page.mouse.click(165, 500);
+            await page.waitForTimeout(2500);
+            await page.screenshot({ path: 'screenshots/02-movie-details.png', fullPage: true });
+
+            // Return to the home screen and capture a real search interaction.
+            await page.mouse.click(28, 30);
+            await page.waitForTimeout(1500);
+            await page.mouse.click(500, 180);
+            await page.keyboard.type('movie');
+            await page.keyboard.press('Enter');
+            await page.waitForTimeout(1500);
+            await page.screenshot({ path: 'screenshots/03-search-results.png', fullPage: true });
+
+            // Open the favorites screen from the app bar.
+            await page.mouse.click(28, 30).catch(() => {});
+            await page.waitForTimeout(1000);
+            await page.mouse.click(1400, 30);
+            await page.waitForTimeout(1500);
+            await page.screenshot({ path: 'screenshots/04-favorites-screen.png', fullPage: true });
+
+            await browser.close();
+          })().catch(error => { console.error(error); process.exit(1); });
+          NODE
+
+      - name: Commit screenshots to the repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add screenshots/*.png
+          if git diff --cached --quiet; then
+            echo "No screenshot changes to commit."
+          else
+            git commit -m "Add screenshots captured from running Movie App"
+            git push
+          fi
