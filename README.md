@@ -54,15 +54,16 @@ Unit and widget test coverage.
 
 ## 4. Screenshots
 
-The supplied source ZIP does not include captured screenshots of the running Movie App. This section will contain genuine screenshots of the app screens once they are captured from a running Flutter build. The launcher icons and splash assets in the ZIP are not substitutes for app-screen screenshots.
+These images are captured by GitHub Actions from the compiled and running Flutter web app. They are not hand-drawn mockups.
 
-Suggested screenshots:
-- Home screen and movie listing
-- Movie details screen
-- Search results
-- Favorites screen
-- Responsive layout
-- Loading, error, and empty states
+| Screen | Preview |
+|---|---|
+| Home and movie listing | ![Movie App home screen](screenshots/01-home-screen.png) |
+| Movie details | ![Movie details screen](screenshots/02-movie-details.png) |
+| Search results | ![Movie search results](screenshots/03-search-results.png) |
+| Favorites | ![Favorites screen](screenshots/04-favorites-screen.png) |
+
+The screenshot workflow runs when the capture workflow or app source changes. It can also be started manually from the repository's **Actions** tab by selecting **Capture Movie App Screenshots** and choosing **Run workflow**.
 
 ## 5. How to Run the Project
 
