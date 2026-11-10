@@ -20,93 +20,79 @@ Movie App is a Flutter application for browsing movie information. The project d
 - Loading, error, and empty states
 - Unit and widget tests
 
-## 3. Lab Experiment Mapping and Evidence
+## 3. Lab Experiments with Project Screenshots
 
-The screenshots below are captured from the compiled Flutter web application by the GitHub Actions workflow. They are real browser screenshots, not mockups. Source-code and test-based experiments are mapped to their implementation files because those concepts are not all separate screens.
+Each experiment includes a screenshot captured from the compiled, running Movie App. The images are placed directly under the experiment they demonstrate, rather than collected in a separate gallery.
 
 ### Experiment 1 – Flutter and Dart Basics
+
 Flutter app entry point, Dart classes, imports, and application structure.
 
-**Source:** `lib/main.dart`, `lib/models/movie.dart`
-
-**Visual evidence:** [Home screen](screenshots/01-home-screen.png)
+![Experiment 1 – Flutter and Dart Basics - actual Movie App screenshot](screenshots/01-flutter-dart-basics.png)
 
 ### Experiment 2 – Flutter Widgets and Layouts
-Text, Image, Container, Icon, Row, Column, Stack, Card, buttons, and layout widgets.
 
-**Sources:** `lib/screens/`, `lib/widgets/`
+Movie listing showing the project's cards, text, images, icons, and layout widgets.
 
-**Visual evidence:** [Home screen](screenshots/01-home-screen.png)
+![Experiment 2 – Flutter Widgets and Layouts - actual Movie App screenshot](screenshots/02-widgets-and-layouts.png)
 
 ### Experiment 3 – Responsive UI Design
-The movie grid changes its column count according to the available width using LayoutBuilder.
 
-**Source:** `lib/screens/home_screen.dart`
+The actual app rendered at a phone-sized viewport to demonstrate the responsive movie grid.
 
-**Visual evidence:**
-- [Desktop layout](screenshots/01-home-screen.png)
-- [Mobile layout](screenshots/02-responsive-mobile.png)
-- [Tablet layout](screenshots/03-responsive-tablet.png)
+![Experiment 3 – Responsive UI Design - actual Movie App screenshot](screenshots/03-responsive-mobile.png)
 
 ### Experiment 4 – Navigation
-Named-route navigation to the movie details screen and navigation to the favorites screen.
 
-**Sources:** `lib/main.dart`, `lib/widgets/movie_card.dart`, `lib/screens/movie_details_screen.dart`, `lib/screens/favorites_screen.dart`
+The movie details screen opened from a movie card in the running app.
+
+![Experiment 4 – Navigation - actual Movie App screenshot](screenshots/04-navigation-details.png)
 
 ### Experiment 5 – State Management
-ChangeNotifier and Provider expose favorite state to the widget tree.
 
-**Source:** `lib/providers/favorite_provider.dart`
+The favorites screen rendered through the Provider-managed favorites state.
 
-**Test evidence:** `test/favorite_provider_test.dart`
+![Experiment 5 – State Management - actual Movie App screenshot](screenshots/05-provider-favorites.png)
 
 ### Experiment 6 – Custom Widgets and Themes
-Reusable movie cards, rating badges, section titles, state messages, animation widgets, and ThemeData.
 
-**Sources:** `lib/widgets/`, `lib/theme/app_theme.dart`
+The running movie listing using reusable movie cards, rating badges, section titles, and the app theme.
 
-**Visual evidence:** [Home screen](screenshots/01-home-screen.png)
+![Experiment 6 – Custom Widgets and Themes - actual Movie App screenshot](screenshots/06-custom-widgets-theme.png)
 
 ### Experiment 7 – Forms and Validation
-The movie search form validates input and supports search and clear-search actions.
 
-**Source:** `lib/widgets/movie_search_form.dart`
+The actual search form after entering a movie query and applying the filter.
 
-**Visual evidence:** [Home screen with search form](screenshots/01-home-screen.png)
+![Experiment 7 – Forms and Validation - actual Movie App screenshot](screenshots/07-search-validation.png)
 
 ### Experiment 8 – Animations
-Fade-in and slide-in animation widgets are used when displaying movie cards.
 
-**Sources:** `lib/widgets/fade_in_animation.dart`, `lib/widgets/slide_in_animation.dart`, `lib/widgets/movie_card.dart`
+The movie listing after the fade-in and slide-in animations have rendered.
+
+![Experiment 8 – Animations - actual Movie App screenshot](screenshots/08-animations.png)
 
 ### Experiment 9 – REST API and JSON
-The app sends an HTTP request, decodes JSON, and maps response data into Movie model objects.
 
-**Sources:** `lib/services/movie_api_service.dart`, `lib/models/movie.dart`
+The movie listing after the REST API request and JSON-to-model mapping have completed.
 
-**Visual evidence:** [Movie listing](screenshots/01-home-screen.png)
+![Experiment 9 – REST API and JSON - actual Movie App screenshot](screenshots/09-rest-api-json.png)
 
 ### Experiment 10 – Testing and Debugging
-Unit and widget tests cover the movie model, favorite provider, rating badge, and app UI. The screenshot workflow runs `flutter analyze` and `flutter test` before capturing screenshots.
 
-**Sources:** `test/`
+The app screenshot captured after the workflow passes Flutter analysis and automated tests.
 
-## 4. Screenshots
+![Experiment 10 – Testing and Debugging - actual Movie App screenshot](screenshots/10-testing-debugging.png)
 
-| Screenshot | Description |
-|---|---|
-| ![Desktop home screen](screenshots/01-home-screen.png) | Desktop home screen and movie listing |
-| ![Mobile responsive layout](screenshots/02-responsive-mobile.png) | Phone-width responsive layout |
-| ![Tablet responsive layout](screenshots/03-responsive-tablet.png) | Tablet-width responsive layout |
-
-## 5. Automatic Screenshot Capture
+## 4. Automatic Screenshot Capture
 
 GitHub Actions workflow: `.github/workflows/capture-screenshots.yml`
 
-- Runs on pushes affecting the app, tests, README, or screenshot workflow.
+- Runs Flutter analysis and automated tests before building the web app.
+- Launches the compiled Movie App in Chromium and captures a screenshot for each of the 10 experiments.
+- Commits the PNG files into `screenshots/` so they render inline above.
+- Uploads the screenshots as a downloadable Actions artifact.
 - Can also be started manually from **Actions → Capture Movie App Screenshots → Run workflow**.
-- Installs Flutter, runs `flutter analyze` and `flutter test`, builds the web app, and captures desktop, mobile, and tablet screenshots.
-- Commits generated PNG files into the `screenshots/` directory.
 
 ## 6. How to Run the Project
 
