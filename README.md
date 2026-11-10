@@ -6,139 +6,101 @@
 
 ## 1. Project Description
 
-Movie App is a Flutter application that displays movie information through a responsive user interface. It integrates REST API data, movie search, favorites management, reusable widgets, animations, and responsive layouts.
-
-The project demonstrates concepts covered in the prescribed Flutter lab experiments.
+Movie App is a Flutter application for browsing movie information. The project demonstrates movie listing, search, favorites, navigation, reusable widgets, responsive layouts, animations, REST API integration, and testing.
 
 ## 2. Features
 
-- Movie listing using REST API data
-- Movie search and clear-search functionality
-- Movie details screen and navigation
-- Add and remove favorite movies
-- Favorite count indicator
+- Movie listing and details
+- Search and clear-search functionality
+- Favorites management
 - Responsive movie grid
-- Light theme and reusable styling
-- Form validation
-- Fade-in, slide-in, and hover animations
-- Refresh functionality
+- Reusable widgets and theme styling
+- Form validation and animations
+- REST API and JSON integration
 - Loading, error, and empty states
 - Unit and widget tests
 
 ## 3. Lab Experiment Mapping
 
 ### Experiment 1 – Flutter and Dart Basics
-The project uses Flutter widgets, Dart classes, imports, functions, and the standard Flutter application structure.
-
-**Source:** `lib/main.dart`
+Flutter app structure, Dart classes, imports, and application entry point.
 
 ### Experiment 2 – Flutter Widgets and Layouts
-The application uses Text, Image, Container, Icon, buttons, Row, Column, Stack, Card, and other layout widgets.
-
-**Sources:** `lib/widgets/`, `lib/screens/`
+Text, Image, Container, Icon, Row, Column, Stack, Card, and buttons.
 
 ### Experiment 3 – Responsive UI Design
-The movie grid adjusts its column count according to the available screen width using LayoutBuilder.
-
-**Source:** `lib/screens/home_screen.dart`
+Responsive layouts and grid columns based on available screen width.
 
 ### Experiment 4 – Navigation
-Navigation is used to move between the home screen, movie details screen, and favorites screen.
-
-**Sources:** `lib/widgets/movie_card.dart`, `lib/screens/`
+Navigation between movie listing, movie details, and favorites.
 
 ### Experiment 5 – State Management
-StatefulWidget and setState manage screen-level state, while Provider and ChangeNotifier manage favorite movies.
-
-**Source:** `lib/providers/favorite_provider.dart`
+Provider, ChangeNotifier, and favorite state updates.
 
 ### Experiment 6 – Custom Widgets and Themes
-Reusable components include movie cards, section titles, rating badges, animation widgets, and state messages. ThemeData defines shared application styling.
-
-**Sources:** `lib/widgets/`, `lib/theme/app_theme.dart`
+Reusable components and shared application styling.
 
 ### Experiment 7 – Forms and Validation
-The movie search form validates input and supports searching and clearing the query.
-
-**Source:** `lib/widgets/movie_search_form.dart`
+Movie search form and input validation.
 
 ### Experiment 8 – Animations
-Fade-in, slide-in, and hover animations enhance the movie browsing experience.
-
-**Sources:** `lib/widgets/fade_in_animation.dart`, `lib/widgets/slide_in_animation.dart`, `lib/widgets/movie_card.dart`
+Fade-in, slide-in, and hover animation concepts.
 
 ### Experiment 9 – REST API and JSON
-The application sends HTTP requests, parses JSON responses, and converts the returned data into Movie model objects.
-
-**Sources:** `lib/services/movie_api_service.dart`, `lib/models/movie.dart`
+HTTP requests, JSON parsing, and mapping API data to model objects.
 
 ### Experiment 10 – Testing and Debugging
-Unit and widget tests check movie model data, favorite management, the rating badge, and application UI.
+Unit and widget test coverage.
 
-**Sources:** `test/`
+## 4. Experiment Visual Previews
 
-> Verify each source path and feature against the current project before submission. Include only concepts that are actually implemented and working.
+The following images are visual documentation previews based on the project concepts. They are not screenshots captured from a running emulator or browser.
 
-## 4. Screenshots and Evidence
+### Experiment 1 – Flutter and Dart Basics
+![Experiment 1 – Flutter and Dart Basics](screenshots/experiment_01.svg)
 
-Add screenshots of the actual application and relevant source code in this section.
+### Experiment 2 – Flutter Widgets and Layouts
+![Experiment 2 – Flutter Widgets and Layouts](screenshots/experiment_02.svg)
 
-### Home Screen and Movie Listing
-<!-- Add screenshot: screenshots/home_screen.png -->
+### Experiment 3 – Responsive UI Design
+![Experiment 3 – Responsive UI Design](screenshots/experiment_03.svg)
 
-### Responsive Layout
-<!-- Add mobile, tablet, and desktop screenshots -->
+### Experiment 4 – Navigation
+![Experiment 4 – Navigation](screenshots/experiment_04.svg)
 
-### Navigation and Movie Details
-<!-- Add screenshot: screenshots/movie_details.png -->
+### Experiment 5 – State Management
+![Experiment 5 – State Management](screenshots/experiment_05.svg)
 
-### Favorites and State Management
-<!-- Add screenshot: screenshots/favorites_screen.png -->
+### Experiment 6 – Custom Widgets and Themes
+![Experiment 6 – Custom Widgets and Themes](screenshots/experiment_06.svg)
 
-### Search and Form Validation
-<!-- Add screenshot: screenshots/movie_search.png -->
+### Experiment 7 – Forms and Validation
+![Experiment 7 – Forms and Validation](screenshots/experiment_07.svg)
 
-### Animations and Custom Widgets
-<!-- Add screenshots of the relevant UI and source code -->
+### Experiment 8 – Animations
+![Experiment 8 – Animations](screenshots/experiment_08.svg)
 
-### REST API Integration
-<!-- Add screenshot of API results and movie_api_service.dart -->
+### Experiment 9 – REST API and JSON
+![Experiment 9 – REST API and JSON](screenshots/experiment_09.svg)
 
-### Testing and Debugging
-<!-- Add screenshot showing flutter analyze and flutter test results -->
+### Experiment 10 – Testing and Debugging
+![Experiment 10 – Testing and Debugging](screenshots/experiment_10.svg)
 
 ## 5. How to Run the Project
 
-Install Flutter and configure your development environment.
-
-Clone the repository:
+Install Flutter, then run:
 
 ```bash
-git clone https://github.com/manichandan-alt/movie_app.git
+git clone https://github.com/manichandanreddy1775/movie_app.git
 cd movie_app
-```
-
-Install dependencies:
-
-```bash
 flutter pub get
+flutter run
 ```
 
-Run the application in Chrome:
-
-```bash
-flutter run -d chrome
-```
-
-Analyze the project:
+Run checks:
 
 ```bash
 flutter analyze
-```
-
-Run tests:
-
-```bash
 flutter test
 ```
 
@@ -153,14 +115,14 @@ lib/
   services/
   theme/
   widgets/
-
 test/
+screenshots/
 ```
 
 ## 7. GitHub Repository
 
-[Movie App Repository](https://github.com/manichandan-alt/movie_app)
+[Movie App Repository](https://github.com/manichandanreddy1775/movie_app)
 
 ## 8. Conclusion
 
-This project demonstrates the application of Flutter UI design concepts through a movie browsing application. The source code, working output, test results, and screenshots provide evidence of the implemented lab concepts.
+This project demonstrates Flutter UI design and application development concepts through a movie browsing application. The experiment previews are provided above for quick reference.
